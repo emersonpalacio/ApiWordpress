@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .loader{
+            display: none;
+            margin: 2rem auto;
+        }
+     
+    </style>
+</head>
+<body>
+    <h1>WordPress Rest Api</h1>
+    <article class="site" id="site"></article>
+    <section class="posts" id="posts"></section>
+    <img class="loader" src="./assets/puff.svg"  alt="Cargando">
+    <template id="post-template" id="post-template">
+        <article class="post">
+            <img  class="post-image">
+            <aside>
+                <h2 class="post-title" id="post-title">emerson</h2>
+                <figure class="post-author"></figure>
+                <small class="post-date"></small>
+                <a  class="post-link" target="_blank">Ver publicacion</a>
+                <p class="post-excerpt"></p>
+                <div class="post-categories"></div>
+                <div class="post-tags"></div>
+                <details class="pot-content">
+                    <summary>Ver contenido de la publicacion</summary>
+                    <article>   </article>
+                </details>
+            </aside>
+        </article>
+        <hr>
+    </template>
+    <script>
+      const d = document,
+            $site = d.getElementById("site"),
+            $posts = d.getElementById("posts"),
+            $loader = d.querySelector(".loader"),
+            $template = d.getElementById("post-template"),
+            $fragment = d.createDocumentFragment(),
+            DOMAIN = "https://malvestida.com",
+            SITE = `${DOMAIN}/wp-json`,
+            API_wp = `${SITE}/wp/v2`,
+            POSTS = `${API_wp}/posts?_embed`,//la interrogacion significa que viene una variable
+            PAGES = `${API_wp}/pages`;
+            CATEGORIES = `${API_wp}/categories`;
+
+            function getSiteData(){
+                
+                fetch(SITE)
+                .then(res => res.ok ? res.json(): Promise.reject(res))
+                .then(json=> {
+                    console.log(json);
+                    $site.innerHTML= `
+                      <h3>Sitio Web </h3>
+                      <h2>
+                         <a href="${json.url}" target = "_blank">${json.name} </a> 
+                      </h2>
+                      <p>${json.description} </p>
+                      <p>${json.timezone_string} </p>
+                      <p>${json.home} </p>                    
+                    `
+                })
+                .catch(err =>{
+                     let message = err.statusText || "Ocurrio un error";
+                     $site.innerHTML =`<p>Error ${err.status}: $ {message} <p/>`
+                })
+            }
+
+            function getPost(){
+                $loader.style.display="block"; //visualizo
+                fetch(POSTS)
+                .then(res => res.ok ? res.json(): Promise.reject(res))
+                .then(json => {
+                    console.log(json)
+                    // json.forEach(el => {
+                    //    $template.querySelector(".post-template").innerHTML=el-title.rendered ;
+                    // //   $template.querySelector(".post-image").src = el._embedded["wp:featuredmedia"] ? el._embedded ["wp:featuredmedia"][0].source_url:"";
+                    // //   $template.querySelector(".post-image").alt = el.title.rendered;
+                      
+                    //   let $clone = d.importNode($template, true);
+                    //   $fragment.appendChild($clone);
+                      
+                    // });
+                    $posts.appendChild($fragment)                  
+                    $loader.style.display="none"; //visualizo
+                    
+                })
+
+                .catch(err =>{
+                    //console.log(err)
+                     let message = err.statusText || "Ocurrio un error";
+                     $posts.innerHTML = `<p>Error ${err.status}: ${message} </p>`;
+                     $loader.style.display = "none";
+                })
+            }
+
+            d.addEventListener("DOMContentLoaded", (e) =>{
+               
+                getSiteData();
+                getPost();
+            })
+
+     
+    </script>
+</body>
+</html>
