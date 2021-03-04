@@ -5,30 +5,19 @@ import {Header} from './component/Header.js'
 import {Loader} from './component/Loader.js'
 import { Post } from './component/Post.js'
 
+
 import { PostCard } from './component/PostCard.js'
+import { Rutas } from './component/Rutas.js'
+
 
 export function App(){
-    const d = document,
-       $root = d.getElementById("root");
-
-       $root.appendChild(Title());
-       $root.appendChild(Loader());
+    const  $root = document.getElementById("root");
+       
        $root.appendChild(Header());
        $root.appendChild(Post());
+       $root.appendChild(Loader());       
+      Rutas();
        
 
-    ajax({
-        url: api.POST,
-        cbSuccess:(posts)=>{
-            console.log(posts);
-            let html = "";
-            posts.forEach(post => { html += PostCard(post); });
-            d.querySelector(".loader").style.display = "none";
-            d.getElementById("posts").innerHTML = html;
 
-        } ,
-    })
-
-
-    
 }
