@@ -1,6 +1,6 @@
 import {App} from "./App.js"
 
-const d = document;
+const d = document ;
 
 d.addEventListener("DOMContentLoaded", App)
 
