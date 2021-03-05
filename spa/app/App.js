@@ -3,7 +3,7 @@ import {ajax} from './helpers/ajax.js'
 import {Title} from './component/Title.js'
 import {Header} from './component/Header.js'
 import {Loader} from './component/Loader.js'
-import { Post } from './component/Post.js'
+import { Main } from './component/Main.js'
 
 
 import { PostCard } from './component/PostCard.js'
@@ -12,9 +12,10 @@ import { Rutas } from './component/Rutas.js'
 
 export function App(){
     const  $root = document.getElementById("root");
-       
+
+       $root.innerHTML=null;   
        $root.appendChild(Header());
-       $root.appendChild(Post());
+       $root.appendChild(Main());
        $root.appendChild(Loader());       
       Rutas();
        

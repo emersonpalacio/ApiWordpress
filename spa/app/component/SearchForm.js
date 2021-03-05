@@ -3,7 +3,7 @@ export function SearchForm(){
       $input = document.createElement("input");
      
 
-      $form.classList.add("form-search");
+      $form.classList.add("search-form");
       $input.name= "Search";
       $input.type= "Search";
       $input.placeholder ="Buscar ....";
