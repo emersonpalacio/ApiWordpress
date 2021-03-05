@@ -20,7 +20,7 @@ export  async function Rutas(){
        await ajax({
        url: api.POST,
        cbSuccess:(posts)=>{
-           console.log(posts);
+           //console.log(posts);
            let html = "";
            posts.forEach(post => { html += PostCard(post); });
           // d.querySelector(".loader").style.display = "none";
@@ -30,8 +30,18 @@ export  async function Rutas(){
        })  
        //console.log(api.POST);
     }else if (hash.includes("#/search")) {
-        $main.innerHTML =`<h2>seccion del buscardpor</h2>`
+        //$main.innerHTML =`<h2>seccion del buscardpor</h2>`
         //d.querySelector(".loader").style.display = "none";
+        let query = localStorage.getItem("wpSearch");
+        if(!query) return false;
+
+        await ajax({
+          url:`${api.SEARCH}${query}`,
+          cbSuccess:(search)=>{
+            console.log(search);
+          },
+        });
+
         
     } else if(hash === "#/contacto"){
         $main.innerHTML =`<h2>seccion del contacto</h2>`
@@ -40,11 +50,11 @@ export  async function Rutas(){
    }else{
     $main.innerHTML =`<h2>cargar el contenido del post previamente seleccionado</h2>`    
     //console.log(`${api.POST}/${localStorage.getItem("wpPostId")}`);
-    await ajax({
-        url: `${api.POST}/${localStorage.getItem("wpPostId")}`,
-        cbSuccess:(post)=>{
-            console.log(post);
-            $main.innerHTML = Post(post);    
+        await ajax({
+            url: `${api.POST}/${localStorage.getItem("wpPostId")}`,
+            cbSuccess:(post)=>{
+           // console.log(post);
+                $main.innerHTML = Post(post);    
             },
         }) 
    }    
