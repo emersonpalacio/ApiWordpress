@@ -3,6 +3,7 @@ import {ajax} from "../helpers/ajax.js"
 import {PostCard} from "./PostCard.js"
 import {Post} from '../component/Post.js'
 import { SearchCard } from "./SearchCard.js";
+import { ContactForm } from "./ContactForm.js";
 
 
 
@@ -62,8 +63,9 @@ export  async function Rutas(){
 
         
     } else if(hash === "#/contacto"){
-        $main.innerHTML =`<h2>seccion del contacto</h2>`
+        //$main.innerHTML =`<h2>seccion del contacto</h2>`
         //d.querySelector(".loader").style.display = "none";
+        $main.appendChild(ContactForm());
        
    }else{
     $main.innerHTML =`<h2>cargar el contenido del post previamente seleccionado</h2>`    
