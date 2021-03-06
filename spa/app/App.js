@@ -8,6 +8,7 @@ import { Main } from './component/Main.js'
 
 import { PostCard } from './component/PostCard.js'
 import { Rutas } from './component/Rutas.js'
+import { inifinit_scroll } from './helpers/inifinit_scroll.js'
 
 
 export function App(){
@@ -18,6 +19,8 @@ export function App(){
        $root.appendChild(Main());
        $root.appendChild(Loader());       
       Rutas();
+      inifinit_scroll();
+      
        
 
 
