@@ -2,6 +2,7 @@ import api from "../helpers/wp_api.js";
 import {ajax} from "../helpers/ajax.js"
 import {PostCard} from "./PostCard.js"
 import {Post} from '../component/Post.js'
+import { SearchCard } from "./SearchCard.js";
 
 
 
@@ -33,12 +34,29 @@ export  async function Rutas(){
         //$main.innerHTML =`<h2>seccion del buscardpor</h2>`
         //d.querySelector(".loader").style.display = "none";
         let query = localStorage.getItem("wpSearch");
-        if(!query) return false;
+        if(!query){
+            document.querySelector(".loader").style.display = "none";
+            return false;
+        }
 
         await ajax({
           url:`${api.SEARCH}${query}`,
           cbSuccess:(search)=>{
             console.log(search);
+            let html="";
+            if (search-length === 0 ) {
+                html =`
+                <p classs ="error">
+                 No existen resutlador de busqueda 
+                 <mark>${query}</mark> 
+                </p>
+                `                
+            }else{
+                search.forEach(post => html += SearchCard(post,))
+
+            }
+            $main.innerHTML =html;
+
           },
         });
 
